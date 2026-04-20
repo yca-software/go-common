@@ -1,0 +1,10 @@
+<html>
+  <body>
+    <h1>{{.Title}}</h1>
+    <p>User: {{.User.Name}}</p>
+    <p>Email: {{.User.Email}}</p>
+    {{if .ShowLink}}
+    <a href="{{.Link}}">Click here</a>
+    {{end}}
+  </body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "error": {
+    "400": {
+      "0001": "Invalid request"
+    },
+    "404": {
+      "0001": "{{.Resource}} not found"
+    },
+    "422": {
+      "0001": "Validation failed: {{.Field}}"
+    }
+  },
+  "welcome": {
+    "message": "Hello {{.Name}}"
+  },
+  "other": {
+    "key": "Other value"
+  }
+}
