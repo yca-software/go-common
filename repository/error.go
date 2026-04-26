@@ -21,7 +21,9 @@ func WrapSQLError(err error) error {
 	if errors.As(err, &pgErr) {
 		switch pgErr.Code {
 		case "23505":
-			return error_helpers.NewConflictError(err, "", nil)
+			return error_helpers.NewConflictError(err, "", map[string]any{
+				"constraint_name": pgErr.ConstraintName,
+			})
 		case "23503":
 			return error_helpers.NewUnprocessableEntityError(err, "", nil)
 		}

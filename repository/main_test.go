@@ -9,6 +9,7 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/stdlib"
 	"github.com/jmoiron/sqlx"
@@ -112,6 +113,23 @@ func TestWrapSQLError_ErrNoRows_ReturnsNotFound(t *testing.T) {
 	var apiErr *error_helpers.Error
 	require.ErrorAs(t, err, &apiErr)
 	assert.Equal(t, 404, apiErr.StatusCode)
+}
+
+func TestWrapSQLError_ConflictError_ReturnsConstraintNameInExtra(t *testing.T) {
+	constraintName := "products_name_key"
+	err := repository.WrapSQLError(&pgconn.PgError{
+		Code:           "23505",
+		ConstraintName: constraintName,
+	})
+	require.Error(t, err)
+
+	var apiErr *error_helpers.Error
+	require.ErrorAs(t, err, &apiErr)
+	assert.Equal(t, 409, apiErr.StatusCode)
+
+	extra, ok := apiErr.Extra.(map[string]any)
+	require.True(t, ok)
+	assert.Equal(t, constraintName, extra["constraint_name"])
 }
 
 func (suite *RepositoryTestSuite) SetupSuite() {
