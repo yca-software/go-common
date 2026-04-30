@@ -2,9 +2,16 @@
 
 Shared Go packages for the 2Chi framework, published from this standalone `go-common` repository.
 
+## Project Policies
+
+- Contribution guide: `CONTRIBUTING.md`
+- Security policy: `SECURITY.md`
+- Code of conduct: `CODE_OF_CONDUCT.md`
+- License: `LICENSE`
+
 ## Requirements
 
-- Go 1.26+
+- Go 1.26.2+
 
 ## Packages
 
